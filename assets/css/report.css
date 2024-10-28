@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Kadwa:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Kadwa:wght@400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.users{
+    width: auto;
+    height: 102%;
+    box-shadow: 5px 10px 5px #888888;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.fa-square-plus{
+    font-size: 35px;
+}
+
+.fa-pen-to-square{
+    font-size: 20px;
+}
+
+button.subject-modal{
+    background-color: transparent!important;
+    border: none;
+}
+
+#dataGrid , .dx-header-row{
+    color: black
+}
+
+.dx-datagrid-group-panel{
+    color: black;
+    border: 1px solid black;
+    position: relative;
+    top: 5px
+}

@@ -1,0 +1,163 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: SF Pro Display;
+}
+
+.main-sidebar{
+    width: 280px;
+    height: 100vh;
+    margin-left: -20px;
+}
+
+hr{
+    width: 250px;
+}
+
+.active .nav-page{
+    font-weight: 500;
+}
+
+.nav-page{
+    font-weight: 400;
+}
+
+.col-md-4 {
+    width: 280px;
+}
+
+.navbar-dark{
+    display: none;
+}
+
+.flex-md-nowrap{
+    display: none!important;
+}
+
+.bg-dark{
+    background: blue!important;
+}
+
+.bg-light{
+    background-color: #393E46!important;
+}
+
+.dashboard-nav{
+    background: #393E46;
+    width: 99.4%!important;
+    margin-left: 19px!important;
+
+}
+
+.dashboard-nav h2{
+    color: white;
+}
+
+.boxes{
+    margin-top: 20px!important;
+}
+
+.student_applied{
+    background: rgb(82 175 79 / 80%);
+    width: 250px;
+    height: 150px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 10px rgb(74, 74, 74);
+}
+
+.student_no_application{
+    background: rgba(233, 49, 67, 0.80);
+    width: 250px;
+    height: 150px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 10px rgb(74, 74, 74);
+}
+
+.student_list{
+    background: rgba(247, 196, 43, 0.80);
+    width: 250px;
+    height: 150px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 10px rgb(74, 74, 74);
+}
+
+.main-boxes{
+    width: 90%!important;
+    height: 30%;
+    display: block;
+    box-shadow: 10px 10px 10px rgb(74, 74, 74);
+    border: 2px solid rgb(171, 171, 171);
+    
+}
+
+.box-text{
+    font-size: 45px;
+}
+
+/* .card.bg-color{
+    background: black!important;
+} */
+
+
+/* thead.table-color{
+    background-color: green!important;
+} */
+/* ul a.nav-link:hover{
+    background: red!important;
+}
+ */
+
+/* 
+large devices */
+
+@media (max-width: 992px) and (min-width: 767px) {
+    .flex-md-nowrap{
+        display: none!important;
+    }
+}
+
+/*Medium devices */
+
+@media (max-width: 768px) and (min-width: 576px) {
+    .flex-md-nowrap{
+        display: none!important;
+    }
+}
+
+/*Small devices */
+
+@media (max-width: 578px) {
+
+
+    .dashboard-nav{
+        display: none;
+    }
+
+    .student_applied{
+        background: rgba(233, 49, 67, 0.80);
+        width: 250px;
+        height: 150px;
+        border-radius: 25px;
+        z-index: -1;
+        display: block;
+    }
+    
+    .student_no_application{
+        background: rgba(247, 196, 43, 0.80);
+        width: 250px;
+        height: 150px;
+        border-radius: 25px;
+        z-index: -1;
+        display: block;
+    }
+    
+    .student_list{
+        background: rgba(17, 103, 229, 0.80);
+        width: 250px;
+        height: 150px;
+        border-radius: 25px;
+        z-index: -1;
+        display: block;
+    }
+    
+}

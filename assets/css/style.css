@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Kadwa:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Kadwa:wght@400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    height: 100vh;
+    background: url('../image/backgroundjpg.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.login-form{
+    border: 2px solid black;
+    background-color: rgb(228, 228, 228);
+    height: 100vh;
+    width: 45vw!important;
+}
+
+h1.title{
+    font-family: 'kadwa',serif;
+    letter-spacing: 7px;
+
+}
+
+h5.p-welcome{
+    font-family: 'istok-web';
+    font-size: 20px;
+}
+
+.form input[type=email],input[type=password]{
+    background-color: transparent!important;
+    border: solid black;
+    border-width: 0 0 2px 0;
+}
+
+.form label::after{
+    background-color: transparent!important;
+
+}
