@@ -19,12 +19,12 @@ if (isset($_POST['login'])) {
         $_SESSION['Id'] = $row['Id']; 
        
         if ($row['UserType'] == 'Admin') { 
-            @header("Location: ../admin/index.php"); 
+            header("Location: ../admin/index.php"); 
             exit();
         }
     } else {
         // User not found or password is incorrect
-        $_SESSION['status'] = "Wrong username or password!";
+        $_SESSION['status1'] = "Wrong username or password!";
         header('location: ../index.php'); 
         exit(); 
     }

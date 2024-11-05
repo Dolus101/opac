@@ -6,3 +6,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
 ErrorDocument 404 http://localhost/opac/view/404
+ErrorDocument 200 http://localhost/opac/admin/users

@@ -39,6 +39,10 @@ while ($row3= mysqli_fetch_assoc($result3)) {
 }
 
 
+$borrowed = "SELECT Title, CourseYear, book_borrowed.Status
+FROM book_borrowed INNER JOIN book ON book_borrowed.Book_id = book.ID ORDER BY Date_borrowed DESC";
+$result5 = mysqli_query($con, $borrowed);
+
 
 ?>
 
@@ -64,7 +68,7 @@ while ($row3= mysqli_fetch_assoc($result3)) {
 
 <body>
     <?php
-    $page = 'dashboard';
+    $page = 'chart';
     include("../view/sidebar/admin-sidebar.php")
     ?>
     <div id="layoutSidenav_content">
@@ -120,9 +124,44 @@ while ($row3= mysqli_fetch_assoc($result3)) {
                     </div>
                 </div>
                 <!-- end of boxes -->
-                <!-- admin logs -->
+                <!-- table -->
                 <div class="container-fluid">
-                    
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="container-fluid recent-borrowed mt-4">
+                                <h2 class="pt-3">Recent Borrowed Books</h2>
+                                <div class="container table-borrwed mt-5">
+                                    <table id="example" class="table table-striped  mb-5">
+                                        <thead>
+                                            <tr>
+                                                <th>Book</th>
+                                                <th>Department</th>
+                                                <th>Status</th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <?php
+                                            
+                                            foreach($result5 as $row5){
+                                            ?>
+                                            <tr>
+                                                <td><?=$row5['Title']?></td>
+                                                <td><?=$row5['CourseYear']?></td>
+                                                <td><?=$row5['Status']?></td>     
+                                            </tr>
+                                            <?php } ?>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="container mt-4 chart">
+                                <h3 class="pt-3">Overview</h3>
+                                <canvas id="lineChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
         </main>

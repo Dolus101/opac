@@ -3,11 +3,14 @@ session_start();
 include("../core/config.php");
 include("../core/function.php");
 
+$category = "SELECT * FROM category";
+$resCat = mysqli_query($con, $category);
+
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
-    // Redirect to a different page or display an error message
-    header("Location: ../signout.php");
-    exit();
+  // Redirect to a different page or display an error message
+  header("Location: ../signout.php");
+  exit();
 }
 
 ?>
@@ -88,7 +91,7 @@ if ($user_data['UserType'] !== 'Admin') {
 
       <!-- Add Modal -->
       <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Add Subject</h1>
@@ -96,14 +99,36 @@ if ($user_data['UserType'] !== 'Admin') {
             </div>
             <div class="modal-body">
               <form action="../utilities/crud.php" method="POST">
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">Subject</label>
-                  <input type="text" name="name_subj" class="form-control" id="exampleFormControlInput1" value="">
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" name="add_subj" class="btn btn-primary">Add Subject</button>
-                </div>
+                <div class="row g-3 needs-validation" novalidate>
+                  <div class="col-md-12">
+                    <label for="Title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="Title" required>
+                  </div>
+                  <div class="col-md-6  ">
+                    <label for="Department" class="form-label">Department</label>
+                    <select id="Department" class="form-select">
+                      <option selected disabled>Select Department</option>
+                      <option value="College">College</option>
+                      <option value="Senior High">Senior High</option>
+                      <option Value="Junior High">Junior High</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6  ">
+                    <label for="Department" class="form-label">Category</label>
+                    <select id="Category" class="form-select" size="3" style="height: auto; max-height: 200px; overflow-y: auto;">
+                      <option selected disabled>Select Category</option>
+                      <?php 
+                        foreach($resCat as $cat){
+                      ?>
+                      <option value="<?=$cat['ID']?>"><?=$cat['Name']?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="add_subj" class="btn btn-primary">Add Subject</button>
+                  </div>
               </form>
             </div>
           </div>
@@ -122,7 +147,7 @@ if ($user_data['UserType'] !== 'Admin') {
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-  
+
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/chart.js"></script>
   <script>

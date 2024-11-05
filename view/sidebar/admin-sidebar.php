@@ -35,7 +35,9 @@
                             Dashboard
                         </a>
 
-                        <a class="nav-link <?php ?>" href="announcement.php">
+                        <a class="nav-link <?php if ($page == 'chart') {
+                                                        echo 'active';
+                                                    } ?>" href="chart.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
                             Chart
                         </a>
@@ -50,13 +52,13 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link <?php if ($page == 'subject') {
                                                         echo 'active';
-                                                    } ?>" href="subject.php">
+                                                    } ?>" href="subject">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
                                     Subject Areas
                                 </a>
                                 <a class="nav-link <?php if ($page == 'book') {
                                                         echo 'active';
-                                                    } ?>" href="books.php">
+                                                    } ?>" href="books">
                                     <div class="sb-nav-link-icon">
                                         <i class="fa-solid fa-book-open"></i>
                                     </div>
