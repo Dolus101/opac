@@ -56,7 +56,7 @@ session_start();
         <div class="container form mt-5 w-75">
             <form action="utilities/login.php" method="post">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com" required>
+                    <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com" required autocomplete="off">
                     <label for="floatingInput">Admin Email.</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -76,6 +76,7 @@ session_start();
                 </div>
                 <div class="d-flex justify-content-evenly mt-5">
                     <button type="submit" name="login" class="btn btn-primary w-25">Login</button>
+                    <button type="submit" name="login" class="btn btn-light w-25">Sign Up</button>
                 </div>
             </form>
         </div>

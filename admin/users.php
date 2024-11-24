@@ -10,9 +10,9 @@ $result = mysqli_query($con, $sql);
 
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
-    // Redirect to a different page or display an error message
-    header("Location: ../signout.php");
-    exit();
+  // Redirect to a different page or display an error message
+  header("Location: ../signout.php");
+  exit();
 }
 ?>
 <!DOCTYPE html>
@@ -99,7 +99,7 @@ if ($user_data['UserType'] !== 'Admin') {
                 <?php
                 foreach ($result as $row) {
                   // Convert DD-MM-YYYY to YYYY-MM-DD
-                  
+
                 ?>
                   <tr>
                     <td><?= $row['Firstname']; ?></td>
@@ -109,9 +109,9 @@ if ($user_data['UserType'] !== 'Admin') {
 
 
                     <td>
-                      <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['Id']; ?>">
+                      <!-- <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['Id']; ?>">
                         <i class="fa-solid fa-pen-to-square" style="color: #0a58ca;"></i>
-                      </button>
+                      </button> -->
                       <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#DelModal<?= $row['Id']; ?>">
                         <i class="fa-solid fa-trash" style="color: #0a58ca;"></i>
                       </button>
@@ -122,7 +122,7 @@ if ($user_data['UserType'] !== 'Admin') {
 
 
                   <!-- Edit Modal -->
-                  <div class="modal fade" id="editModal<?= $row['Id']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                  <!-- <div class="modal fade" id="editModal<?= $row['Id']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -157,11 +157,11 @@ if ($user_data['UserType'] !== 'Admin') {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
 
                   <!-- DELETE MODAL -->
-                  
+
                   <div class="modal fade" id="DelModal<?= $row['Id']; ?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -171,8 +171,8 @@ if ($user_data['UserType'] !== 'Admin') {
                         </div>
                         <div class="modal-body">
                           <form action="../utilities/crud.php" class="row g-3" method="POST">
-                          <input type="hidden" name="id" class="form-control" value="<?= $row['Id'];?>">
-                          Are you sure you want to delete?
+                            <input type="hidden" name="id" class="form-control" value="<?= $row['Id']; ?>">
+                            Are you sure you want to delete?
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -204,21 +204,17 @@ if ($user_data['UserType'] !== 'Admin') {
             </div>
             <div class="modal-body">
               <form action="../utilities/crud.php" class="row g-3" method="POST">
-                <div class="col-md-12">
-                  <label for="inputEmail4" class="form-label">Title</label>
-                  <input type="text" name="title" class="form-control" required>
+                <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">School ID</label>
+                  <input type="text" name="school_id" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                  <label for="inputPassword4" class="form-label">Book Num</label>
-                  <input type="text" name="book_num" class="form-control">
-                </div>
-                <div class="col-6">
-                  <label for="inputAddress" class="form-label">Author Name</label>
-                  <input type="text" name="author_num" class="form-control" required>
-                </div>
-                <div class="col-12">
-                  <label for="inputAddress2" class="form-label">Date/Year </label>
-                  <input type="date" name="date" class="form-control" required>
+                  <label for="inputEmail4" class="form-label">School ID</label>
+                  <select class="form-select" name="userType" aria-label="Default select example">
+                    <option selected disabled>Select User Type</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Student">Student</option>
+                  </select>
                 </div>
             </div>
             <div class="modal-footer">

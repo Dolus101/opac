@@ -10,33 +10,48 @@ if ($user_data['UserType'] !== 'Admin') {
     exit();
 }
 
-$book = "SELECT count(*) AS count from `book`";
-$result = mysqli_query($con, $book);
+$query = "
+    SELECT 
+        YEAR(Date_borrowed) AS year, 
+        MONTH(Date_borrowed) AS month, 
+        CourseYear,
+        COUNT(*) AS total_borrowed
+    FROM book_borrowed
+    WHERE YEAR(Date_borrowed) = 2022
+    GROUP BY YEAR(Date_borrowed), MONTH(Date_borrowed), CourseYear
+    ORDER BY year DESC, month DESC
+";
+$result = mysqli_query($con, $query);
+
+$months = [];
+$students_data = [];
+$teachers_data = [];
+
 while ($row = mysqli_fetch_assoc($result)) {
-
-    $output = $row['count'];
+    // Format month as MM-YYYY for better display
+    $month = str_pad($row['month'], 2, '0', STR_PAD_LEFT) . '-' . $row['year'];
+    if (!in_array($month, $months)) {
+        $months[] = $month;
+    }
+    if ($row['CourseYear'] == 'student') {
+        $students_data[$month] = $row['total_borrowed'];
+    } else {
+        $teachers_data[$month] = $row['total_borrowed'];
+    }
 }
 
-$borrowed = "SELECT count(*) AS count from `book_borrowed` WHERE Status = 'Borrowed'";
-$result1 = mysqli_query($con, $borrowed);
-while ($row1= mysqli_fetch_assoc($result1)) {
+// Fill missing months with 0 values for both students and teachers
+$students_data = array_merge(array_fill_keys($months, 0), $students_data);
+$teachers_data = array_merge(array_fill_keys($months, 0), $teachers_data);
 
-    $output1 = $row1['count'];
-}
+// Prepare data for chart
+$data = [
+    'months' => array_reverse($months),
+    'students' => array_reverse(array_values($students_data)),
+    'teachers' => array_reverse(array_values($teachers_data))
+];
 
-$Returned = "SELECT count(*) AS count from `book_borrowed` WHERE Status = 'Returned'";
-$result2 = mysqli_query($con, $Returned);
-while ($row2= mysqli_fetch_assoc($result2)) {
-
-    $output2 = $row2['count'];
-}
-
-$Active = "SELECT count(*) AS count from `aspnetusers` WHERE Status = 'Active'";
-$result3 = mysqli_query($con, $Active);
-while ($row3= mysqli_fetch_assoc($result3)) {
-
-    $output3 = $row3['count'];
-}
+echo json_encode($data);
 
 
 $borrowed = "SELECT Title, CourseYear, book_borrowed.Status
@@ -80,7 +95,7 @@ $result5 = mysqli_query($con, $borrowed);
                     <li class="breadcrumb-item active"></li>
                 </ol>
                 <!-- DASHBOARD NI -->
-                <div class="container">
+                <!-- <div class="container">
                     <div class="row">
                         <div class="col-md-3 col-lg-3">
                             <div class="card">
@@ -122,7 +137,7 @@ $result5 = mysqli_query($con, $borrowed);
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- end of boxes -->
                 <!-- table -->
                 <div class="container-fluid">

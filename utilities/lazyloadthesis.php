@@ -1,58 +1,63 @@
 <?php
-session_start();
 include("../core/config.php");
 
-// Get parameters from DataTable
-$draw = intval($_POST['draw']);
-$row = array();
-$start = $_POST['start']; // Offset
-$length = $_POST['length']; // Number of records per page
-$searchValue = $_POST['search']['value']; // Search value
+// Get parameters from DataTables
+$draw = isset($_POST['draw']) ? intval($_POST['draw']) : 0;
+$start = isset($_POST['start']) ? intval($_POST['start']) : 0;
+$length = isset($_POST['length']) ? intval($_POST['length']) : 10;
+$searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
 
-// Query to get the total number of records
-$totalRecordsQuery = "SELECT COUNT(*) as total FROM thesis";
-$totalRecordsResult = mysqli_query($con, $totalRecordsQuery);
-$totalRecords = mysqli_fetch_assoc($totalRecordsResult)['total'];
+// Total records in the thesis table
+$totalQuery = "SELECT COUNT(*) as total FROM thesis";
+$totalResult = mysqli_query($con, $totalQuery);
+$totalRecords = mysqli_fetch_assoc($totalResult)['total'];
 
-// Query to get the data with search functionality
-$dataQuery = "SELECT Id, Title, Book_num, Author_num, Date FROM thesis";
+// Base query to fetch thesis data with optional search filtering
+$baseQuery = "SELECT Id, Title, Book_num, Author_num, Date FROM thesis";
 
-// If there's a search value, modify the query
 if (!empty($searchValue)) {
-    $dataQuery .= " WHERE Title LIKE '%" . mysqli_real_escape_string($con, $searchValue) . "%' 
-                    OR Book_num LIKE '%" . mysqli_real_escape_string($con, $searchValue) . "%' 
-                    OR Author_num LIKE '%" . mysqli_real_escape_string($con, $searchValue) . "%'";
+    $baseQuery .= " WHERE 
+                    Title LIKE '%$searchValue%' OR 
+                    Book_num LIKE '%$searchValue%' OR 
+                    Author_num LIKE '%$searchValue%' OR 
+                    Date LIKE '%$searchValue%'";
 }
 
-// Add limit clause for pagination
-$dataQuery .= " LIMIT $start, $length";
+// Total records after filtering
+$filteredQuery = "SELECT COUNT(*) as total FROM ($baseQuery) as filtered";
+$filteredResult = mysqli_query($con, $filteredQuery);
+$totalFilteredRecords = mysqli_fetch_assoc($filteredResult)['total'];
 
-$dataResult = mysqli_query($con, $dataQuery);
+// Add pagination
+$baseQuery .= " LIMIT $start, $length";
+$dataResult = mysqli_query($con, $baseQuery);
 
-// Process the data and format it for DataTables
-while ($rowData = mysqli_fetch_assoc($dataResult)) {
-    $row[] = array(
-        "Title" => $rowData['Title'],
-        "Book_num" => $rowData['Book_num'],
-        "Author_num" => $rowData['Author_num'],
-        "Date" => $rowData['Date'],
-        "Action" => '<button type="button" class="subject-modal editThesis" data-id="' . $rowData['Id'] . '" data-title="' . $rowData['Title'] . '" data-booknum="' . $rowData['Book_num'] . '" data-authornum="' . $rowData['Author_num'] . '" data-date="' . $rowData['Date'] . '" title="Edit">
-                        <i class="fa-solid fa-pen-to-square" style="color: #0a58ca;"></i>
-                     </button>
-                     <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#DelModal' . $rowData['Id'] . '" title="Delete">
-                        <i class="fa-solid fa-trash" style="color: #0a58ca;"></i>
-                     </button>'
-    );
+// Prepare data for DataTables
+$data = [];
+while ($row = mysqli_fetch_assoc($dataResult)) {
+    $data[] = [
+        $row['Title'],
+        $row['Book_num'],
+        $row['Author_num'],
+        $row['Date'],
+        "<button class='btn btn-sm btn-primary edit-btn' 
+                data-id='{$row['Id']}' data-title='{$row['Title']}' 
+                data-booknum='{$row['Book_num']}' data-authornum='{$row['Author_num']}' data-date='{$row['Date']}'>
+                <i class='fa-regular fa-pen-to-square'></i> 
+         </button>
+         <button class='btn btn-sm btn-danger delete-btn' data-id='{$row['Id']}'>
+            <i class='fa-solid fa-trash'></i> 
+         </button>"
+    ];
 }
 
-// Prepare response for DataTables
-$response = array(
+// Return JSON response
+$response = [
     "draw" => $draw,
-    "iTotalRecords" => $totalRecords,
-    "iTotalDisplayRecords" => $totalRecords, // For simplicity, we'll use the total number of records for now
-    "data" => $row
-);
+    "recordsTotal" => $totalRecords,
+    "recordsFiltered" => $totalFilteredRecords,
+    "data" => $data,
+];
 
-// Output the response in JSON format
 echo json_encode($response);
 ?>

@@ -96,7 +96,7 @@ if ($user_data['UserType'] !== 'Admin') {
                     <td><?= $row['Name']; ?></td>
 
                     <td>
-                      <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['ID']; ?>">
+                      <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['cat_ID']; ?>">
                         <i class="fa-solid fa-pen-to-square" style="color: #0a58ca;"></i>
                       </button>
                     </td>
@@ -107,14 +107,14 @@ if ($user_data['UserType'] !== 'Admin') {
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Subject</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                           <form action="../utilities/crud.php" method="POST">
                             <div class="mb-3">
                               <label for="exampleFormControlInput1" class="form-label">Subject</label>
-                              <input type="hidden" name="id" value="<?= $row['ID'] ?>">
+                              <input type="hidden" name="id" value="<?= $row['cat_ID'] ?>">
                               <input type="text" class="form-control" name="name_subj" value="<?= $row['Name']; ?>">
                             </div>
                         </div>

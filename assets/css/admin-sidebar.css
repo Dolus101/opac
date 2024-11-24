@@ -49,6 +49,10 @@ hr{
 
 }
 
+.sb-topnav.bg-myadmin{
+    background-color: #343a40 !important;
+}
+
 .dashboard-nav h2{
     color: white;
 }

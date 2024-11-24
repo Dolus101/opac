@@ -80,9 +80,6 @@ if ($user_data['UserType'] !== 'Admin') {
           ?>
           <div class="container d-flex justify-content-between">
             <h2 class="pt-3">List of Transaction</h2>
-            <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#addModal">
-              <i class="fa-solid fa-square-plus mt-4" style="color: #0a58ca;"></i>
-            </button>
           </div>
           <div class="container table-borrwed mt-5">
 

@@ -1,74 +1,70 @@
 <?php
 include("../core/config.php");
 
-// Get DataTables request parameters
-$draw = intval($_POST['draw']);
-$start = intval($_POST['start']);
-$length = intval($_POST['length']);
-$searchValue = $_POST['search']['value']; // Search term
-$orderColumnIndex = $_POST['order'][0]['column']; // Column index to sort
-$orderDirection = $_POST['order'][0]['dir']; // Sort direction (asc or desc)
+// Get parameters from DataTables
+$draw = $_POST['draw'];
+$start = $_POST['start'];
+$length = $_POST['length'];
+$searchValue = $_POST['search']['value']; // Search value
 
-// Array of columns for sorting
-$columns = array('Title', 'Department', 'Name', 'Author', 'Copy_date', 'No_copies', 'Isbn');
+// Total records
+$totalQuery = "SELECT COUNT(*) as total FROM book";
+$totalResult = mysqli_query($con, $totalQuery);
+$totalRecords = mysqli_fetch_assoc($totalResult)['total'];
 
-// Query to get the total number of records without filtering
-$totalRecordsQuery = "SELECT COUNT(*) as total FROM book INNER JOIN category ON book.Category = category.ID";
-$totalRecordsResult = mysqli_query($con, $totalRecordsQuery);
-$totalRecords = mysqli_fetch_assoc($totalRecordsResult)['total'];
+// Base query with optional search
+$baseQuery = "SELECT Id, Title, Department, Name, Author, Copy_date, No_copies, Isbn, Book_No, Category, Author_num, Publisher, Acc_num
+              FROM book
+              INNER JOIN category ON book.Category = category.cat_ID";
 
-// Query to get the total number of records with filtering
-$searchQuery = "";
 if (!empty($searchValue)) {
-    $searchQuery = " WHERE Title LIKE '%$searchValue%' 
-                     OR Department LIKE '%$searchValue%' 
-                     OR Name LIKE '%$searchValue%' 
-                     OR Author LIKE '%$searchValue%' 
-                     OR Copy_date LIKE '%$searchValue%' 
-                     OR No_copies LIKE '%$searchValue%' 
-                     OR Isbn LIKE '%$searchValue%'";
+    $baseQuery .= " WHERE 
+                    Title LIKE '%$searchValue%' OR 
+                    Department LIKE '%$searchValue%' OR 
+                    Name LIKE '%$searchValue%' OR 
+                    Author LIKE '%$searchValue%' OR 
+                    Isbn LIKE '%$searchValue%'";
 }
 
-$filteredRecordsQuery = "SELECT COUNT(*) as total FROM book 
-                         INNER JOIN category ON book.Category = category.ID" . $searchQuery;
-$filteredRecordsResult = mysqli_query($con, $filteredRecordsQuery);
-$totalFilteredRecords = mysqli_fetch_assoc($filteredRecordsResult)['total'];
+// Total filtered records
+$filteredQuery = "SELECT COUNT(*) as total FROM ($baseQuery) as filtered";
+$filteredResult = mysqli_query($con, $filteredQuery);
+$totalFilteredRecords = mysqli_fetch_assoc($filteredResult)['total'];
 
-// Query to get the data with filtering, ordering, and pagination
-$dataQuery = "SELECT Title, Department, Name, Author, Copy_date, No_copies, Isbn
-              FROM book 
-              INNER JOIN category ON book.Category = category.ID" 
-              . $searchQuery . 
-              " ORDER BY " . $columns[$orderColumnIndex] . " " . $orderDirection . 
-              " LIMIT $start, $length";
+// Add pagination
+$baseQuery .= " LIMIT $start, $length";
+$dataResult = mysqli_query($con, $baseQuery);
 
-$dataResult = mysqli_query($con, $dataQuery);
-
-// Process the data and format it for DataTables
-$row = array();
-while ($rowData = mysqli_fetch_assoc($dataResult)) {
-    $row[] = array(
-        $rowData['Title'],
-        $rowData['Department'],
-        $rowData['Name'],
-        $rowData['Author'],
-        $rowData['Copy_date'],
-        $rowData['No_copies'],
-        $rowData['Isbn'],
-        '<button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#editModal">
-            <i class="fa-solid fa-pen-to-square" style="color: #0a58ca;"></i>
-        </button>'
-    );
+// Prepare data for DataTables
+$data = [];
+while ($row = mysqli_fetch_assoc($dataResult)) {
+    $data[] = [
+        $row['Title'],
+        $row['Department'],
+        $row['Name'],
+        $row['Author'],
+        $row['Copy_date'],
+        $row['No_copies'],
+        $row['Isbn'],
+        "<button class='btn btn-sm edit-btn' data-id='{$row['Id']}' data-title='{$row['Title']}' 
+                data-department='{$row['Department']}' data-subject='{$row['Category']}' data-author='{$row['Author']}'
+                data-copyright='{$row['Copy_date']}' data-copies='{$row['No_copies']}' data-isbn='{$row['Isbn']}' data-bookno='{$row['Book_No']}'
+                data-authnum='{$row['Author_num']}' data-publisher='{$row['Publisher']}' data-accnum='{$row['Acc_num']}'>
+                <i class='fa-regular fa-pen-to-square' style='color: #0a58ca;' ></i>
+         </button>
+         
+             <a href='viewBook.php?id={$row['Id']}' class='btn btn-sm'>
+                 <i class='fa-solid fa-eye' style='color: #0a58ca;'></i>
+            </a>"
+        
+    ];
 }
 
-// Prepare response for DataTables
-$response = array(
-    "draw" => $draw,
+// Return JSON response
+$response = [
+    "draw" => intval($draw),
     "recordsTotal" => $totalRecords,
     "recordsFiltered" => $totalFilteredRecords,
-    "data" => $row
-);
-
-// Send JSON response
+    "data" => $data,
+];
 echo json_encode($response);
-?>

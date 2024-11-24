@@ -66,19 +66,19 @@
                                 </a>
                                 <a class="nav-link <?php if ($page == 'journal') {
                                                         echo 'active';
-                                                    } ?> " href="journal.php">
+                                                    } ?> " href="journal">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-book-journal-whills"></i></div>
                                     Journals
                                 </a>
                                 <a class="nav-link <?php if ($page == 'newspaper') {
                                                         echo 'active';
-                                                    } ?> " href="newspaper.php">
+                                                    } ?> " href="newspaper">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-newspaper"></i></div>
                                     Newspapers
                                 </a>
                                 <a class="nav-link <?php if ($page == 'thesis') {
                                                         echo 'active';
-                                                    } ?> " href="thesis.php">
+                                                    } ?> " href="thesis">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-bookmark"></i></div>
                                     Thesis
                                 </a>
@@ -95,7 +95,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link <?php if ($page == 'users') {
                                                         echo 'active';
-                                                    } ?> " href="users.php">
+                                                    } ?> " href="users">
                                     <div class="sb-nav-link-icon">
                                         <i class="fa-solid fa-user">
                                         </i>
@@ -104,13 +104,15 @@
                                 </a>
                                 <a class="nav-link <?php if ($page == 'borrowed') {
                                                         echo 'active';
-                                                    } ?> " href="borrowed.php">
+                                                    } ?> " href="borrowed">
                                     <div class="sb-nav-link-icon">
                                         <i class="fa-solid fa-book"></i>
                                     </div>
                                     Borrowed Books
                                 </a>
-                                <a class="nav-link " href="reports.php">
+                                <a class="nav-link <?php if ($page == 'report') {
+                                                        echo 'active';
+                                                    } ?> " href="reports">
                                     <div class="sb-nav-link-icon">
                                         <i class="fa-solid fa-clipboard"></i>
                                         </i>
