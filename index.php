@@ -75,8 +75,8 @@ session_start();
                     </div>
                 </div>
                 <div class="d-flex justify-content-evenly mt-5">
-                    <button type="submit" name="login" class="btn btn-primary w-25">Login</button>
-                    <button type="submit" name="login" class="btn btn-light w-25">Sign Up</button>
+                    <button type="submit" name="login" class="btn btn-primary w-50">Login</button>
+                    <!-- <button type="submit" name="login" class="btn btn-light w-25">Sign Up</button> -->
                 </div>
             </form>
         </div>

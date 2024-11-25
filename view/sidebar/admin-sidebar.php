@@ -102,6 +102,15 @@
                                     </div>
                                     Users
                                 </a>
+                                <a class="nav-link <?php if ($page == 'reservation') {
+                                                        echo 'active';
+                                                    } ?> " href="borrow_confirmation">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fa-solid fa-user">
+                                        </i>
+                                    </div>
+                                    Book Confirmation
+                                </a>
                                 <a class="nav-link <?php if ($page == 'borrowed') {
                                                         echo 'active';
                                                     } ?> " href="borrowed">

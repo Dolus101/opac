@@ -48,7 +48,7 @@ if ($user_data['UserType'] !== 'Admin') {
                   <th>Department</th>
                   <th>Subject Area</th>
                   <th>Author</th>
-                  <th>Copyright</th>
+                  <th>Publish Year</th>
                   <th>No. Copies</th>
                   <th>ISBN</th>
                   <th style="width: 100px;">Action</th>

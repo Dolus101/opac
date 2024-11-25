@@ -1,0 +1,119 @@
+.th-badge {
+    border: 1px solid;
+    border-color: transparent;
+    border-radius: .25rem;
+    padding: .10rem .50rem;
+    width: max-content;
+    user-select: none;
+    font-size: inherit;
+    font-weight: bold;
+    vertical-align: middle;
+    text-align: center !important;
+}
+
+
+
+
+
+/* START-SIZE */
+.th-badge.th-size-xs {
+    font-size: 10px;
+}
+.th-badge.th-size-s {
+    font-size: 12px;
+}
+.th-badge.th-size-m {
+    font-size: 14px;
+}
+.th-badge.th-size-small {
+    font-size: 14px;
+    padding: .40rem 1rem;
+}
+/* END-SIZE */
+
+
+
+
+
+/* START-COLORS */
+.th-badge.th-color-primary {
+    background: var(--app-color-light);
+    color: var(--app-color-primary) !important;
+}
+.th-badge.th-color-success, 
+.th-badge.th-color-green,
+.th-badge.th-color-money {
+    background: #d1fae5;
+    color: #10674e !important;
+}
+.th-badge.th-color-grey,
+.th-badge-th-color-gray,
+.th-badge.th-color-pending {
+    color: #1f2937;
+    background-color: #f3f4f6;
+}
+/* END-COLORS */
+
+
+
+
+
+/* START-BORDERS */
+.th-badge.th-color-primary.th-badge-bordered {
+    border-color: var(--app-color-primary);
+}
+.th-badge.th-color-success.th-badge-bordered, 
+.th-badge.th-color-green.th-badge-bordered,
+.th-badge.th-color-money.th-badge-bordered {
+    border-color: #10674e;
+}
+.th-badge.th-color-grey.th-badge-bordered,
+.th-badge-th-color-gray.th-badge-bordered,
+.th-badge.th-color-pending.th-badge-bordered {
+    border-color: #1f2937;
+}
+/* END-BORDERS */
+
+
+
+
+
+/* START-INVERTED */
+.th-badge.th-color-primary.th-badge-inverted {
+    background-color: var(--app-color-primary);
+    color: #fff !important;
+}
+.th-badge.th-color-success.th-badge-inverted, 
+.th-badge.th-color-green.th-badge-inverted,
+.th-badge.th-color-money.th-badge-inverted {
+    background-color: #10674e;
+    color: #fff !important;
+}
+.th-badge.th-color-grey.th-badge-inverted,
+.th-badge-th-color-gray.th-badge-inverted,
+.th-badge.th-color-pending.th-badge-inverted {
+    background-color: #1f2937;
+    color: #fff;
+}
+/* END-INVERTED */
+
+.th-badge.th-color-ready {
+    color: #2544bf;
+    background: #e9eeff;
+}
+.th-badge.th-color-cancel {
+    color: #fa6a0a;
+    background: #ffeadb;
+}
+.th-badge.th-color-orange {
+    color: #fa6a0a;
+    background: #ffeadb;
+}
+.th-badge.th-color-declined {
+    color: #9d174d;
+    background: #fce7f3;
+}
+.th-badge.th-color-red {
+    color: #9d174d;
+    background: #fce7f3;
+}
