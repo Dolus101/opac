@@ -1,12 +1,10 @@
 <?php
 session_start();
-include("../core/config.php");
-include("../core/function.php");
+include("../../core/config.php");
+include("../../core/function.php");
 
-$sql = "SELECT book.Title, book_borrowed.Date_borrowed, book_borrowed.Date_returned, book_borrowed.Status, Firstname, LastName 
-from book_borrowed 
-INNER JOIN book ON book_borrowed.Book_id = book.ID 
-INNER JOIN aspnetusers ON book_borrowed.Student_id = aspnetusers.Id";
+$sql = "SELECT book_reservation.*, Firstname, LastName, Title FROM book_reservation JOIN aspnetusers ON book_reservation.Student_id = aspnetusers.Id 
+LEFT JOIN book ON book_reservation.Book_id = book.ID  WHERE book_reservation.Status = 'Pending'";
 $result = mysqli_query($con, $sql);
 
 
@@ -14,7 +12,7 @@ $result = mysqli_query($con, $sql);
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
   // Redirect to a different page or display an error message
-  header("Location: ../signout.php");
+  header("Location: ../../signout.php");
   exit();
 }
 ?>
@@ -27,11 +25,12 @@ if ($user_data['UserType'] !== 'Admin') {
   <!-- datatable css-->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
   <!-- index admin CSS -->
-  <link rel="stylesheet" href="../assets/css/users.css">
+  <link rel="stylesheet" href="../../assets/css/borrowed-confirmation.css">
+  <link rel="stylesheet" href="../../assets/css/badge.css">
   <!-- sidebar admin CSS -->
-  <link rel="stylesheet" href="../assets/css/admin-sidebar.css">
+  <link rel="stylesheet" href="../../assets/css/admin-sidebar.css">
   <!-- bootstrap -->
-  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
   <!-- Include DevExtreme CSS and JS files -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,8 +39,8 @@ if ($user_data['UserType'] !== 'Admin') {
 
 <body>
   <?php
-  $page = 'borrowed';
-  include("../view/sidebar/admin-sidebar.php")
+  $page = 'reservation';
+  include("../../view/sidebar/admin-sidebar.php")
   ?>
   <div id="layoutSidenav_content">
     <main>
@@ -79,82 +78,79 @@ if ($user_data['UserType'] !== 'Admin') {
           }
           ?>
           <div class="container d-flex justify-content-between">
-            <h2 class="pt-3">List of Transaction</h2>
+            <h2 class="pt-3">List of Pending</h2>
+            <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#addModal">
+              <i class="fa-solid fa-square-plus mt-4" style="color: #0a58ca;"></i>
+            </button>
           </div>
           <div class="container table-borrwed mt-5">
 
 
 
-            <table id="example" class="table table-striped mb-5" style="width:100%">
+            <table id="" class="table table-striped mb-5" style="width:100%">
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Book Name</th>
-                  <th>Date Borrowed</th>
-                  <th>Date Returnned</th>
+                  <th>Book</th>
                   <th>Status</th>
-                  <td style="width: 100px;">Action</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                foreach ($result as $row) {
-                  // Convert DD-MM-YYYY to YYYY-MM-DD
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                  switch ($row['Status']) {
+                    case 'Pending':
+                      $status_icon = 'fa-solid fa-clock-rotate-left';
+                      $status_color = 'th-color-orange';
+                      break;
+                  }
 
                 ?>
                   <tr>
-                    <td><?= $row['Firstname'];?> <?=$row['LastName']?></td>
+                    <td><?= $row['Firstname']; ?><?= $row['LastName']; ?></td>
                     <td><?= $row['Title']; ?></td>
-                    <td><?= $row['Date_borrowed']; ?></td>
-                    <td><?= $row['Date_returned']; ?></td>
-                    <td><?= $row['Status']; ?></td>
+                    <td>
+                      <span class="th-badge <?php echo $status_color ?>">
+                        <?= $row['Status']; ?>
+                        <i class="fas <?php echo $status_icon ?> ml-1"></i>
+                      </span>
+                    </td>
 
 
                     <td>
-                      <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#editModal">
-                        <i class="fa-solid fa-pen-to-square" style="color: #0a58ca;"></i>
+                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AcceptModal<?=$row['Id']?>">
+                        Approve
                       </button>
-                      <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#DelModal">
-                        <i class="fa-solid fa-trash" style="color: #0a58ca;"></i>
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#RejectModal<?=$row['Id']?>">
+                        Reject
                       </button>
-                    </td>
                   </tr>
 
 
 
 
                   <!-- Edit Modal -->
-                  <div class="modal fade" id="editModal<?= $row['Id']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="AcceptModal<?= $row['Id']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Users</h1>
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Accept</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          <form action="../utilities/crud.php" class="row g-3" method="POST">
-                            <div class="col-md-12">
-                              <label for="inputEmail4" class="form-label">Title</label>
-                              <input type="hidden" name="id" class="form-control" value="<?= $row['Id']; ?>">
-                              <input type="text" name="title" class="form-control" value='<?= $row['Title']; ?>' required>
-                            </div>
-                            <div class="col-md-6">
-                              <label for="inputPassword4" class="form-label">Book Num</label>
-                              <input type="text" name="book_num" class="form-control" value="<?= $row['Book_num']; ?>">
-                            </div>
-                            <div class="col-md-6">
-                              <label for="inputAddress" class="form-label">Author Num</label>
-                              <input type="text" name="author_num" class="form-control" value="<?= $row['Author_num']; ?>" required>
-                            </div>
-                            <div class="col-12">
-                              <label for="inputAddress2" class="form-label">Date/Year </label>
-                              <input type="date" name="date" class="form-control" value="<?= $formattedDate; ?>" required>
-
-                            </div>
+                          <form action="../../utilities/crud.php" class="row g-3" method="POST">
+                          <input type="hidden" name="id" value="<?=$row['Id']?>">
+                          <input type="hidden" name="student_id" value="<?=$row['Student_id']?>">
+                          <input type="hidden" name="book_id" value="<?=$row['Book_id']?>">
+                          <input type="hidden" name="date" value="<?=$row['Date']?>">
+                          <input type="hidden" name="status" value="Approved">
+                          <h5>Are you sure you want to accept?</h5>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" name="edit_users" class="btn btn-primary">Save Changes</button>
+                          <button type="submit" name="Accept" class="btn btn-primary">Accept</button>
                           </form>
                         </div>
                       </div>
@@ -164,7 +160,7 @@ if ($user_data['UserType'] !== 'Admin') {
 
                   <!-- DELETE MODAL -->
 
-                  <div class="modal fade" id="DelModal<?= $row['Id']; ?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="RejectModal<?= $row['Id']; ?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -172,13 +168,15 @@ if ($user_data['UserType'] !== 'Admin') {
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          <form action="../utilities/crud.php" class="row g-3" method="POST">
+                          <form action="../../utilities/crud.php" class="row g-3" method="POST">
                             <input type="hidden" name="id" class="form-control" value="<?= $row['Id']; ?>">
-                            Are you sure you want to delete?
+                          <input type="hidden" name="status" value="Rejected">
+
+                            Are you sure you want to reject?
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" name="del_users" class="btn btn-primary">Delete</button>
+                          <button type="submit" name="Reject" class="btn btn-primary">Reject</button>
                           </form>
                         </div>
                       </div>
@@ -205,22 +203,18 @@ if ($user_data['UserType'] !== 'Admin') {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form action="../utilities/crud.php" class="row g-3" method="POST">
-                <div class="col-md-12">
-                  <label for="inputEmail4" class="form-label">Title</label>
-                  <input type="text" name="title" class="form-control" required>
+              <form action="../../utilities/crud.php" class="row g-3" method="POST">
+                <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">School ID</label>
+                  <input type="text" name="school_id" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                  <label for="inputPassword4" class="form-label">Book Num</label>
-                  <input type="text" name="book_num" class="form-control">
-                </div>
-                <div class="col-6">
-                  <label for="inputAddress" class="form-label">Author Name</label>
-                  <input type="text" name="author_num" class="form-control" required>
-                </div>
-                <div class="col-12">
-                  <label for="inputAddress2" class="form-label">Date/Year </label>
-                  <input type="date" name="date" class="form-control" required>
+                  <label for="inputEmail4" class="form-label">School ID</label>
+                  <select class="form-select" name="userType" aria-label="Default select example">
+                    <option selected disabled>Select User Type</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Student">Student</option>
+                  </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -246,7 +240,7 @@ if ($user_data['UserType'] !== 'Admin') {
 
 
   <!-- font awesone -->
-  <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script>
+  <!-- <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script> -->
   <!--BOOTSTRAP JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <!-- DATATABLE -->
@@ -255,9 +249,9 @@ if ($user_data['UserType'] !== 'Admin') {
   <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
   <!-- script file-->
 
-  <script src="../assets/js/main.js"></script>
-  <script src="../assets/js/chart.js"></script>
-  <script src="../assets/js/datatable.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/chart.js"></script>
+  <script src="../../assets/js/datatable.js"></script>
 
 
 

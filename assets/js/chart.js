@@ -7,7 +7,7 @@ var data = {
     {
       label: 'Student',
       data: [50, 70, 60, 80, 90, 70, 85],
-      borderColor: '#26A69A',
+      borderColor: '#26A69A', //#ff73dc
       fill: false,
       tension: 0.1
     },

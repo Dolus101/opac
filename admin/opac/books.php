@@ -1,14 +1,14 @@
 <?php
 session_start();
-include("../core/config.php");
-include("../core/function.php");
+include("../../core/config.php");
+include("../../core/function.php");
 
 $query = "SELECT * FROM category";
 $resCat = mysqli_query($con, $query);
 
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
-  header("Location: ../signout.php");
+  header("Location: ../../signout.php");
   exit();
 }
 ?>
@@ -18,9 +18,9 @@ if ($user_data['UserType'] !== 'Admin') {
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-  <link rel="stylesheet" href="../assets/css/books.css">
-  <link rel="stylesheet" href="../assets/css/admin-sidebar.css">
-  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../../assets/css/books.css">
+  <link rel="stylesheet" href="../../assets/css/admin-sidebar.css">
+  <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CRMC - Dashboard</title>
 </head>
@@ -28,7 +28,7 @@ if ($user_data['UserType'] !== 'Admin') {
 <body>
   <?php
   $page = 'book';
-  include("../view/sidebar/admin-sidebar.php");
+  include("../../view/sidebar/admin-sidebar.php");
   ?>
   <div id="layoutSidenav_content">
     <main>
@@ -37,7 +37,7 @@ if ($user_data['UserType'] !== 'Admin') {
           <div class="container d-flex justify-content-between">
             <h2 class="pt-3">List of Books</h2>
             <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#addModal">
-              <i class="fa-solid fa-square-plus mt-4" style="color: #0a58ca;"></i>
+              <i class="fa-solid fa-square-plus mt-4" style="color: red;"></i>
             </button>
           </div>
           <div class="container table-borrowed mt-5">
@@ -79,11 +79,13 @@ if ($user_data['UserType'] !== 'Admin') {
               </div>
               <div class="col-md-4">
                 <label for="Department" class="form-label">Department</label>
-                <select id="editDepartment" name="department" class="form-select">
+                <select id="Department" class="form-select" name="department" required>
                   <option selected disabled>Select Department</option>
-                  <option value="College">College</option>
-                  <option value="Senior High">Senior High</option>
-                  <option Value="Junior High">Junior High</option>
+                  <option value="CCS">College of Computer Studies</option>
+                  <option value="CBE">College of Business Education</option>
+                  <option Value="CTE">College of Teacher Education</option>
+                  <option Value="CCJE">College of Criminal Justice Education</option>
+                  <option Value="PYSCH">Psychology Program</option>
                 </select>
               </div>
               <div class="col-md-4">
@@ -150,7 +152,7 @@ if ($user_data['UserType'] !== 'Admin') {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="../utilities/crud.php" method="POST">
+          <form action="../../utilities/crud.php" method="POST">
             <div class="row g-3 needs-validation" novalidate>
               <div class="col-md-12">
                 <label for="Title" class="form-label">Title</label>
@@ -228,7 +230,7 @@ if ($user_data['UserType'] !== 'Admin') {
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-  <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script>
+  <!-- <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
@@ -238,7 +240,7 @@ if ($user_data['UserType'] !== 'Admin') {
         "processing": true,
         "serverSide": true,
         "ajax": {
-          "url": "../utilities/lazyload.php",
+          "url": "../../utilities/lazyload.php",
           "type": "POST"
         },
         "columns": [{
@@ -288,7 +290,7 @@ if ($user_data['UserType'] !== 'Admin') {
     $('#editForm').on('submit', function(e) {
       e.preventDefault();
       $.ajax({
-        url: '../utilities/updateBook.php',
+        url: '../../utilities/updateBook.php',
         type: 'POST',
         data: $(this).serialize(),
         success: function(response) {
@@ -308,7 +310,7 @@ if ($user_data['UserType'] !== 'Admin') {
     $('#confirmDelete').on('click', function() {
       const bookId = $(this).data('id');
       $.ajax({
-        url: '../utilities/deleteBook.php',
+        url: '../../utilities/deleteBook.php',
         type: 'POST',
         data: {
           bookId: bookId

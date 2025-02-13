@@ -1,10 +1,11 @@
 <?php
 session_start();
-include("../core/config.php");
-include("../core/function.php");
+include("../../core/config.php");
+include("../../core/function.php");
 
-$sql = "SELECT * from newsarticle";
+$sql = "SELECT * from journal";
 $result = mysqli_query($con, $sql);
+
 
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
@@ -14,6 +15,7 @@ if ($user_data['UserType'] !== 'Admin') {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,11 +25,11 @@ if ($user_data['UserType'] !== 'Admin') {
   <!-- datatable css-->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
   <!-- index admin CSS -->
-  <link rel="stylesheet" href="../assets/css/subjects.css">
+  <link rel="stylesheet" href="../../assets/css/subjects.css">
   <!-- sidebar admin CSS -->
-  <link rel="stylesheet" href="../assets/css/admin-sidebar.css">
+  <link rel="stylesheet" href="../../assets/css/admin-sidebar.css">
   <!-- bootstrap -->
-  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
   <!-- Include DevExtreme CSS and JS files -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,8 +38,8 @@ if ($user_data['UserType'] !== 'Admin') {
 
 <body>
   <?php
-  $page = 'newspaper';
-  include("../view/sidebar/admin-sidebar.php")
+  $page = 'journal';
+  include("../../view/sidebar/admin-sidebar.php")
   ?>
   <div id="layoutSidenav_content">
     <main>
@@ -75,7 +77,7 @@ if ($user_data['UserType'] !== 'Admin') {
           }
           ?>
           <div class="container d-flex justify-content-between">
-            <h2 class="pt-3">List of Newspaper</h2>
+            <h2 class="pt-3">List of Journal</h2>
             <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#addModal">
               <i class="fa-solid fa-square-plus mt-4" style="color: #0a58ca;"></i>
             </button>
@@ -87,9 +89,11 @@ if ($user_data['UserType'] !== 'Admin') {
           <table id="example" class="table table-striped mb-5" style="width:100%">
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>date/Year/th>
+                  <th>Name</th>
+                  <th>Vol Num</th>
                   <th>Author</th>
+                  <th>No. of pages</th>
+                  <th>Month and Year</th>
                   <td style="width: 100px;">Action</td>
                 </tr>
               </thead>
@@ -99,8 +103,11 @@ if ($user_data['UserType'] !== 'Admin') {
                 ?>
                   <tr>
                     <td><?= $row['Name']; ?></td>
-                    <td><?= $row['Date']; ?></td>
+                    <td><?= $row['Vol_num']; ?></td>
                     <td><?= $row['Author']; ?></td>
+                    <td><?= $row['No_of_pages']; ?></td>
+                    <td><?= $row['Monthj_and_year']; ?></td>
+                    <td><?= $row['Isbn']; ?></td>
 
                     <td>
                       <button type="button" class="subject-modal" data-bs-toggle="modal" data-bs-target="#editModal">
@@ -121,7 +128,7 @@ if ($user_data['UserType'] !== 'Admin') {
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          <form action="../utilities/crud.php" method="POST">
+                          <form action="../../utilities/crud.php" method="POST">
                             <div class="mb-3">
                               <label for="exampleFormControlInput1" class="form-label">Subject</label>
                               <input type="hidden" name="id" value="<?= $row['ID'] ?>">
@@ -153,7 +160,7 @@ if ($user_data['UserType'] !== 'Admin') {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form action="../utilities/crud.php" method="POST">
+              <form action="../../utilities/crud.php" method="POST">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Subject</label>
                 <input type="text" name="name_subj" class="form-control" id="exampleFormControlInput1" value="">
@@ -181,7 +188,7 @@ if ($user_data['UserType'] !== 'Admin') {
 
 
   <!-- font awesone -->
-  <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script>
+  <!-- <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script> -->
   <!--BOOTSTRAP JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <!-- DATATABLE -->
@@ -189,9 +196,10 @@ if ($user_data['UserType'] !== 'Admin') {
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
   <!-- script file-->
-  <script src="../assets/js/main.js"></script>
-  <script src="../assets/js/chart.js"></script>
-  <script src="../assets/js/datatable.js"></script>
+  
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/chart.js"></script>
+  <script src="../../assets/js/datatable.js"></script>
 
 
 

@@ -1,12 +1,12 @@
 <?php
 session_start();
-include("../core/function.php");
-include("../core/config.php");
+include("../../core/function.php");
+include("../../core/config.php");
 
 // Check user authentication and authorization
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
-    header("Location: ../signout.php");
+    header("Location: ../../signout.php");
     exit();
 }
 ?>
@@ -16,9 +16,9 @@ if ($user_data['UserType'] !== 'Admin') {
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="../assets/css/thesis.css">
-    <link rel="stylesheet" href="../assets/css/admin-sidebar.css">
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/css/thesis.css">
+    <link rel="stylesheet" href="../../assets/css/admin-sidebar.css">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRMC - Dashboard</title>
 </head>
@@ -26,7 +26,7 @@ if ($user_data['UserType'] !== 'Admin') {
 <body>
     <?php
     $page = 'thesis';
-    include("../view/sidebar/admin-sidebar.php");
+    include("../../view/sidebar/admin-sidebar.php");
     ?>
 
     <div id="layoutSidenav_content">
@@ -104,7 +104,7 @@ if ($user_data['UserType'] !== 'Admin') {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="../utilities/crud.php" method="POST">
+                    <form action="../../utilities/crud.php" method="POST">
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
                             <input type="text" name="title" class="form-control" required>
@@ -132,7 +132,7 @@ if ($user_data['UserType'] !== 'Admin') {
     </div>
 
     <!-- JS -->
-    <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -146,7 +146,7 @@ if ($user_data['UserType'] !== 'Admin') {
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '../utilities/lazyloadthesis.php',
+                    url: '../../utilities/lazyloadthesis.php',
                     type: 'POST'
                 },
                 columns: [{
@@ -182,7 +182,7 @@ if ($user_data['UserType'] !== 'Admin') {
             $('#editForm').on('submit', function(e) {
                 e.preventDefault();
                 $.ajax({
-                    url: '../utilities/thesisCrud.php', // Adjust to your edit endpoint
+                    url: '../../utilities/thesisCrud.php', // Adjust to your edit endpoint
                     method: 'POST',
                     data: $(this).serialize() + '&action=edit',
                     success: function(response) {
@@ -198,7 +198,7 @@ if ($user_data['UserType'] !== 'Admin') {
                 const id = $(this).data('id');
                 if (confirm('Are you sure you want to delete this thesis?')) {
                     $.ajax({
-                        url: '../utilities/thesisCrud.php', // Adjust to your delete endpoint
+                        url: '../../utilities/thesisCrud.php', // Adjust to your delete endpoint
                         method: 'POST',
                         data: {
                             id: id,

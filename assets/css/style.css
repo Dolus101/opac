@@ -48,7 +48,17 @@ h5.p-welcome{
     border-width: 0 0 2px 0;
 }
 
-.form label::after{
+/* .form label::after{
     background-color: transparent!important;
 
-}
+} */
+
+/* .btn:hover{
+    background-color: red !important;
+} */
+ /* .title{
+    color: red !important;
+ } */
+  /* .login-form{
+    background-color: pink !important;
+  } */

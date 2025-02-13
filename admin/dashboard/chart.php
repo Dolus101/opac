@@ -1,12 +1,12 @@
 <?php
 session_start();
-include("../core/config.php");
-include("../core/function.php");
+include("../../core/config.php");
+include("../../core/function.php");
 
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
     // Redirect to a different page or display an error message
-    header("Location: ../signout.php");
+    header("Location: ../../signout.php");
     exit();
 }
 
@@ -70,11 +70,11 @@ $result5 = mysqli_query($con, $borrowed);
     <!-- datatable css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <!-- index admin CSS -->
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../../assets/css/admin.css">
     <!-- sidebar admin CSS -->
-    <link rel="stylesheet" href="../assets/css/admin-sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/admin-sidebar.css">
     <!-- bootstrap -->
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
     <!-- Include DevExtreme CSS and JS files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,7 +84,7 @@ $result5 = mysqli_query($con, $borrowed);
 <body>
     <?php
     $page = 'chart';
-    include("../view/sidebar/admin-sidebar.php")
+    include("../../view/sidebar/admin-sidebar.php")
     ?>
     <div id="layoutSidenav_content">
         <main>
@@ -190,7 +190,7 @@ $result5 = mysqli_query($con, $borrowed);
 
 
     <!-- font awesone -->
-    <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script> -->
     <!--BOOTSTRAP JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!-- DATATABLE -->
@@ -199,9 +199,9 @@ $result5 = mysqli_query($con, $borrowed);
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <!-- script file-->
     <!--  -->
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/chart.js"></script>
-    <script src="../assets/js/datatable.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/chart.js"></script>
+    <script src="../../assets/js/datatable.js"></script>
     
     
 

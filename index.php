@@ -71,7 +71,7 @@ session_start();
                         </label>
                     </div>
                     <div class="forgt-password mt-3">
-                        <a href="#" class="nav-link">Forgot Password</a>
+                        <!-- <a href="#" class="nav-link">Forgot Password</a> -->
                     </div>
                 </div>
                 <div class="d-flex justify-content-evenly mt-5">

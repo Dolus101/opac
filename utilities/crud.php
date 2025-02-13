@@ -25,7 +25,7 @@ if (isset($_POST['edit_subj'])) {
     $id = $_POST['id'];
 
 
-    $sql = "UPDATE category SET Name = '$name' WHERE ID = '$id'";
+    $sql = "UPDATE category SET Name = '$name' WHERE cat_ID = '$id'";
     if (mysqli_query($con, $sql)) {
         $_SESSION['status'] = "Successfully Edited";
         header('location: ../admin/subject');

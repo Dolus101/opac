@@ -54,7 +54,7 @@ hr{
 }
 
 .dashboard-nav h2{
-    color: white;
+    color: rgb(97, 26, 26) !important;
 }
 
 .boxes{
@@ -98,21 +98,25 @@ hr{
     font-size: 45px;
 }
 
-/* .card.bg-color{
-    background: black!important;
+/* .sb-sidenav-menu{
+    background-color: aqua !important;
+} */
+
+/* .navbar-brand{
+    color: violet !important;
+} */
+
+/* .dashboard{
+    color: red !important;
+} */
+
+/* .chart{
+    color: red !important;
 } */
 
 
-/* thead.table-color{
-    background-color: green!important;
-} */
-/* ul a.nav-link:hover{
-    background: red!important;
-}
- */
 
-/* 
-large devices */
+/* large devices */
 
 @media (max-width: 992px) and (min-width: 767px) {
     .flex-md-nowrap{

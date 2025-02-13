@@ -1,12 +1,12 @@
 <?php
 session_start();
-include("../core/config.php");
-include("../core/function.php");
+include("../../core/config.php");
+include("../../core/function.php");
 
 $user_data = check_login($con);
 if ($user_data['UserType'] !== 'Admin') {
     // Redirect to a different page or display an error message
-    header("Location: ../signout.php");
+    header("Location: ../../signout.php");
     exit();
 }
 
@@ -47,15 +47,29 @@ while ($row3= mysqli_fetch_assoc($result3)) {
 
 <head>
     <meta charset="UTF-8">
+
+    
+<!-- <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-duotone-thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-duotone-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-duotone-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-duotone-light.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/sharp-light.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/duotone-thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/duotone-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.1/css/duotone-light.css"> -->
     <!-- <link rel="icon" type="image/png" href="../images/scholar-logo.png" /> -->
     <!-- datatable css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <!-- index admin CSS -->
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../../assets/css/admin.css">
     <!-- sidebar admin CSS -->
-    <link rel="stylesheet" href="../assets/css/admin-sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/admin-sidebar.css">
     <!-- bootstrap -->
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
     <!-- Include DevExtreme CSS and JS files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,7 +79,7 @@ while ($row3= mysqli_fetch_assoc($result3)) {
 <body>
     <?php
     $page = 'dashboard';
-    include("../view/sidebar/admin-sidebar.php")
+    include("../../view/sidebar/admin-sidebar.php")
     ?>
     <div id="layoutSidenav_content">
         <main>
@@ -83,7 +97,7 @@ while ($row3= mysqli_fetch_assoc($result3)) {
                                 <div class="card-body">
                                     <h5 class="card-title total"><?php echo $output ?></h5>
                                     <p class="card-text">Books </p>
-                                    <a href="#" class="btn btn-primary"disabled>Books</a>
+                                    <a href="#" class="btn btn-primary books"disabled>Books</a>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +150,7 @@ while ($row3= mysqli_fetch_assoc($result3)) {
 
 
     <!-- font awesone -->
-    <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/581b97ebce.js" crossorigin="anonymous"></script> -->
     <!--BOOTSTRAP JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!-- DATATABLE -->
@@ -145,9 +159,9 @@ while ($row3= mysqli_fetch_assoc($result3)) {
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <!-- script file-->
     <!--  -->
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/chart.js"></script>
-    <script src="../assets/js/datatable.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/chart.js"></script>
+    <script src="../../assets/js/datatable.js"></script>
     
     
 
